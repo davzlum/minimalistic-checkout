@@ -1,8 +1,9 @@
 import React from 'react';
+import ProductScreen from './components/ProductScreen';
 
 const App = function () {
   return (
-    <h1>Hola</h1>
+    <ProductScreen />
   );
 };
 
