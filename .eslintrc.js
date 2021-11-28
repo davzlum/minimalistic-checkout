@@ -27,5 +27,6 @@ module.exports = {
     'react/no-unused-class-component-methods': 'off',
     'import/no-import-module-exports': 'off',
     'import/no-relative-packages': 'off',
+    'func-names': 'off',
   },
 };
