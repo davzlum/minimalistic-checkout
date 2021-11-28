@@ -1,9 +1,13 @@
 import React from 'react';
+import PaymentScreen from './components/PaymentScreen';
 import ProductScreen from './components/ProductScreen';
 
 const App = function () {
   return (
-    <ProductScreen />
+    <div className="app-container">
+      <ProductScreen />
+      <PaymentScreen />
+    </div>
   );
 };
 
