@@ -19,21 +19,35 @@ const CountriesDropdown = function () {
         }),
       );
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   }
 
   useEffect(() => {
-    if (countries.length <= 0) getCountries();
+    if (!countries.length) getCountries();
   }, []);
 
   return (
-    <label htmlFor="countries">
-      Country or region
-      <select id="countries" name="countries">
-        {countries.map((country) => <option value={country.name}>{country.name}</option>)}
-      </select>
-    </label>
+    <div className="form-group">
+      <div className="form-row">
+        <label htmlFor="countries">
+          Country or region
+          <select id="countries" className="form-control top" name="countries">
+            {countries.map((country) => (
+              <option value={country.name}>
+                {country.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div className="form-row">
+        <label htmlFor="ZIP">
+          <input type="text" className="form-control bottom" placeholder="ZIP" />
+        </label>
+      </div>
+    </div>
   );
 };
 
