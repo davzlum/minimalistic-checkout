@@ -1,0 +1,139 @@
+.form-control{
+    border-radius: 6px;
+    position: relative;
+    width: 100%;
+    height: 44px;
+    padding: 8px 12px;
+    color: rgba(26,26,26,.9);
+    font-size: 16px;
+    line-height: 1.5;
+    border: 0;
+    box-shadow: 0 0 0 1px #e0e0e0, 0 2px 4px 0 rgb(0 0 0 / 7%), 0 1px 1.5px 0 rgb(0 0 0 / 5%);
+    background: #fff;
+    margin-top: 4px;
+}
+
+.form-row{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+        label{
+            width: 100%;
+        }
+}
+
+label {
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 22px;
+    color: #697386;
+    
+}
+
+.top{
+    border-radius: 6px 6px 0 0;
+}
+
+.bottom{
+    border-radius: 0 0 6px 6px;
+    margin:1px 0;
+}
+
+.bottom-left{
+    border-radius: 0 0 0 6px;
+    margin:1px 0;
+}
+
+.bottom-right{
+    border-radius: 0 0 6px 0;
+    margin:1px 0;
+}
+
+.form-group{
+    margin-bottom: 8px;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.col-md-6{
+    width: 50%;
+    position: relative;
+}
+
+.payment-screen{
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+.card-icons{
+    position:absolute;
+    top: 35px;
+    right: 0;
+    height: 100%;
+    padding-right: 8px;
+    img{
+        padding-right: 4px;
+    }
+}
+
+.icon{
+    position: absolute;
+    top: 15px;
+    right: 0;
+    padding-right: 4px;
+    margin-right: 8px;
+} 
+
+.button-pay{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 12px 48px;
+width: 100%;
+background: #3C4257;
+box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.12), 0px 2px 5px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.08);
+border-radius: 4px;
+margin: 32px 0px;
+font-size: 18px;
+line-height: 24px;
+color: #8792A2;
+}
+
+.apple-pay{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 12px 48px;
+width: 100%;
+background: #000000;
+box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.12), 0px 2px 5px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.08);
+border-radius: 4px;
+margin: 32px 0px;
+}
+
+.divider{
+    padding-top: 16px;
+    padding-bottom: 32px;
+    position: relative;
+    align-items: center;
+    overflow: hidden;
+    display: flex;
+    hr{
+    width: 100%;
+    height: 1px;
+    border: none;
+    background-color: rgba(26,26,26,.1);
+    }
+    .divider-text{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0 8px;
+        white-space: nowrap;
+        background-color: #fff;
+        color: rgba(26,26,26,.5);
+    }
+}

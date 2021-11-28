@@ -1,0 +1,17 @@
+.button-back{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: flex-start;
+}
+
+button{
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+}
+
+.arrow{
+    height: 16px;
+    padding-right: 8px;
+}
