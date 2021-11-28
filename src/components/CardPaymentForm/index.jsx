@@ -1,27 +1,67 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import CountriesDropdown from '../CountriesDropdown';
+import cvcIcon from '../../assets/cvcIcon.svg';
 
 const CardPaymentForm = function () {
-  const [state, setState] = useState({
-    number: '',
+  const validationsForm = (formulary) => {
+    const errorsMessage = {};
+    const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/i;
+    const validateEmail = emailRegex.test(formulary.email);
+    if (!validateEmail) {
+      errorsMessage.email = '* Email incorrecto';
+    } else {
+      errorsMessage.email = '';
+    }
+    const cardRegex = /[0-9]{15,16}|(([0-9]{4}\s){3}[0-9]{3,4})/;
+    const validateCard = cardRegex.test(formulary.cardNumber);
+    if (!validateCard) {
+      errorsMessage.cardNumber = '* Número incorrecto';
+    } else {
+      errorsMessage.cardNumber = '';
+    }
+    const dateRegex = /(?:0[1-9]|1[0-2])\/[0-9]{2}/;
+    const validateDate = dateRegex.test(formulary.dataExpiration);
+    if (!validateDate) {
+      errorsMessage.dataExpiration = '* Fecha incorrecta';
+    } else {
+      errorsMessage.dataExpiration = '';
+    }
+    const cvcRegex = /^[0-9]{3,4}$/;
+    const validateCvc = cvcRegex.test(formulary.cvcNumber);
+    if (!validateCvc) {
+      errorsMessage.cvcNumber = '* Número CVC incorrecto';
+    } else {
+      errorsMessage.cvcNumber = '';
+    }
+    return errorsMessage;
+  };
+  const initialForm = {
+    email: '',
+    cardNumber: '',
+    dataExpiration: '',
+    cvcNumber: '',
     name: '',
-    expiry: '',
-    cvc: '',
-    focus: '',
-  });
-  const handleInputChange = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
+    country: '',
+    zip: '',
+  };
+  const [form, setForm] = useState(initialForm);
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
     });
   };
-  const handleFocusChange = (e) => {
-    setState({
-      ...state,
-      focus: e.target.name,
-    });
+
+  const handleSubmit = (e) => {
+    handleChange(e);
+    setErrors(validationsForm(form));
   };
+
   return (
     <form>
       <div className="form-group">
@@ -32,7 +72,12 @@ const CardPaymentForm = function () {
             name="email"
             id="email"
             className="form-control"
+            onChange={handleChange}
+            required
           />
+          <div className="error-container">
+            {errors.email && <span>{errors.email}</span>}
+          </div>
         </label>
       </div>
       <div className="form-group">
@@ -43,12 +88,12 @@ const CardPaymentForm = function () {
               type="text"
               inputMode="numeric"
               placeholder="1234 1234 1234 1234"
-              name="number"
+              name="cardNumber"
               id="number"
-              maxLength="16"
+              maxLength="19"
               className="form-control top"
-              onChange={handleInputChange}
-              onFocus={handleFocusChange}
+              onChange={handleChange}
+              required
             />
             <div className="card-icons">
               <img src="https://js.stripe.com/v3/fingerprinted/img/visa-365725566f9578a9589553aa9296d178.svg" alt="" />
@@ -64,35 +109,36 @@ const CardPaymentForm = function () {
               <input
                 type="text"
                 inputMode="numeric"
-                name="expiry"
+                name="dataExpiration"
                 id="expiry"
-                maxLength="4"
+                maxLength="5"
                 className="form-control bottom-left"
                 placeholder="MM / YY"
-                onChange={handleInputChange}
-                onFocus={handleFocusChange}
+                onChange={handleChange}
+                required
               />
             </label>
+            <div className="error-container">
+              {errors.cardNumber && <span>{errors.cardNumber}</span>}
+              {errors.dataExpiration && <span>{errors.dataExpiration}</span>}
+              {errors.cvcNumber && <span>{errors.cvcNumber}</span>}
+            </div>
           </div>
           <div className="col-md-6">
             <label htmlFor="cvc">
               <input
                 type="text"
                 inputMode="numeric"
-                name="cvc"
+                name="cvcNumber"
                 id="cvc"
-                maxLength="4"
+                maxLength="3"
                 className="form-control bottom-right"
                 placeholder="CVC"
-                onChange={handleInputChange}
-                onFocus={handleFocusChange}
+                onChange={handleChange}
+                required
               />
               <div className="icon">
-                <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.2" d="M16.0086 1.56735H1.54983C0.873914 1.56735 0.0804443 2.34613 0.0804443 3.03674V14.0571C0.0804443 14.7478 0.873914 15.5265 1.54983 15.5265H19.9172C20.5931 15.5265 21.3866 14.7478 21.3866 14.0571V8.5249C20.7676 9.08165 20.0033 9.4511 19.1825 9.59021V9.64899C19.1825 10.1339 18.918 10.3837 18.4478 10.3837H2.28453C1.81432 10.3837 1.54983 10.1339 1.54983 9.64899V8.91429C1.54983 8.42939 1.81432 8.1796 2.28453 8.1796H15.1637C14.7396 7.7096 14.4221 7.1535 14.2329 6.54938C14.0437 5.94525 13.9873 5.30738 14.0675 4.67942C14.1477 4.05147 14.3627 3.44827 14.6978 2.91114C15.0328 2.374 15.4799 1.91561 16.0086 1.56735V1.56735Z" fill="#697386" />
-                  <path d="M14.2894 3.77142H0.0804443V5.9755H14.0984C13.975 5.23647 14.0407 4.47821 14.2894 3.77142V3.77142Z" fill="#697386" />
-                  <path d="M18.8929 10.2857C17.5321 10.2857 16.2271 9.74388 15.2649 8.77941C14.3028 7.81493 13.7622 6.50683 13.7622 5.14286C13.7622 3.77889 14.3028 2.47078 15.2649 1.50631C16.2271 0.541835 17.5321 0 18.8929 0C20.2536 0 21.5586 0.541835 22.5208 1.50631C23.483 2.47078 24.0235 3.77889 24.0235 5.14286C24.0235 6.50683 23.483 7.81493 22.5208 8.77941C21.5586 9.74388 20.2536 10.2857 18.8929 10.2857ZM16.8553 3.01224H16.2762L14.8616 3.73224V4.46694L15.9831 3.87918V7.27347H16.8626V3.01224H16.8553ZM18.5411 3.6C18.9588 3.6 19.252 3.8351 19.252 4.17306C19.252 4.54041 18.9075 4.79755 18.4091 4.79755H18.1892V5.42204H18.4531C18.9808 5.42204 19.34 5.68653 19.34 6.06857C19.34 6.43592 18.9882 6.68571 18.4898 6.68571C18.1233 6.68571 17.7568 6.56816 17.3757 6.34041V7.0751C17.7861 7.25143 18.1966 7.34694 18.5997 7.34694C19.5599 7.34694 20.2195 6.85469 20.2195 6.14204C20.2195 5.64245 19.9117 5.23837 19.3986 5.07673C19.8384 4.9298 20.1242 4.54041 20.1242 4.09959C20.1242 3.40898 19.5159 2.93878 18.6363 2.93878C18.2399 2.94318 17.8484 3.02816 17.4856 3.18857V3.90857C17.8374 3.7102 18.1966 3.6 18.5411 3.6ZM21.7074 5.20163C22.2425 5.20163 22.6163 5.51755 22.6163 5.92898C22.6163 6.36245 22.2425 6.66367 21.7074 6.66367C21.3849 6.66367 21.0478 6.56082 20.7033 6.34776V7.10449C21.0624 7.26612 21.4289 7.34694 21.788 7.34694C21.9786 7.34694 22.1545 7.31755 22.3231 7.27347C22.7042 6.64898 22.9241 5.92898 22.9241 5.15755L22.9095 4.84898C22.6369 4.68729 22.3245 4.60581 22.0079 4.61388C21.876 4.61388 21.7367 4.62122 21.5901 4.64327V3.68816H22.6456C22.5541 3.453 22.4412 3.22675 22.3084 3.01224H20.8279V5.32653C21.1211 5.25306 21.4142 5.20163 21.7074 5.20163Z" fill="#697386" />
-                </svg>
+                <img src={cvcIcon} alt="cvc" />
               </div>
             </label>
           </div>
@@ -107,13 +153,13 @@ const CardPaymentForm = function () {
             id="name"
             maxLength="30"
             className="form-control"
-            onChange={handleInputChange}
-            onFocus={handleFocusChange}
+            onChange={handleChange}
+            required
           />
         </label>
       </div>
       <CountriesDropdown />
-      <button type="button" className="button-pay">Pay $899.00</button>
+      <input onClick={handleSubmit} type="submit" className="button-pay" value="Pay $899.00" />
     </form>
   );
 };
